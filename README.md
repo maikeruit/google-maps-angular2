@@ -1,6 +1,10 @@
 # google-maps-angular2
 Google Maps Api for Angular2
 
+## Demo
+
+<a href="https://youtu.be/fwcnSB6PF-A" target="_blank">Demo</a>
+
 ## Installation
 
 ```sh
