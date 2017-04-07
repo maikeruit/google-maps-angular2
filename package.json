@@ -1,6 +1,6 @@
 {
   "name": "google-maps-angular2",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Google Maps Api for Angular 2",
   "main": "./dist/index.js",
   "typings": "./dist/index",
