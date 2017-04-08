@@ -35,7 +35,8 @@ System.config({
     },
     'google-maps-angular2': {
       defaultExtension: 'js',
-      main: 'index.js'
+      main: 'index.js',
+      format: 'cjs'
     }
     ...
   }
