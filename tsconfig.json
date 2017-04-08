@@ -17,17 +17,6 @@
     "lib": [
       "es2016",
       "dom"
-    ],
-    "typeRoots": [
-      "../node_modules/@types"
-    ],
-    "outDir": "./dist"
-  },
-  "files": [
-    "./index.ts"
-  ],
-  "exclude": [
-    "node_modules/",
-    "dist/"
-  ]
+    ]
+  }
 }

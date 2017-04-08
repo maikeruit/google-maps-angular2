@@ -1,6 +1,10 @@
 # google-maps-angular2
 Google Maps Api for Angular2
 
+The library provides access to the google maps api.
+
+Google Maps Api examples: <a href="https://developers.google.com/maps/documentation/javascript/examples/">Link</a>
+
 ## Demo
 
 <a href="https://youtu.be/fwcnSB6PF-A" target="_blank">Demo</a>
@@ -14,7 +18,30 @@ npm install --save google-maps-angular2
 ### SystemJS configuration
 
 Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
-during...
+
+```javascript
+System.config({
+  ...
+  map: {
+    ...
+    'google-maps-angular2':      'npm:google-maps-angular2/dist'
+    ...
+  },
+  packages: {
+    ...
+    rxjs: {
+      main: 'Rx.js',
+      defaultExtension: 'js'
+    },
+    'google-maps-angular2': {
+      defaultExtension: 'js',
+      main: 'index.js'
+    }
+    ...
+  }
+})
+```
+
 
 ## Usage
 
@@ -23,42 +50,76 @@ First, import `GoogleMapsModule` into the angular module where you want to use i
 ```typescript
 imports: [
   ...
-    GoogleMapsModule.forRoot({
-            API_KEY: 'YouR-Api-Key',
-            libraries: ['places'] // libraries
-        })
+    @NgModule({
+        ...
+        imports: [
+            ...
+            GoogleMapsModule.forRoot({
+                url: 'You google api link without callback'
+            })
+        ]
+
+    })
   ...
 ]
 ```
-Insert into html component page
+Insert into component template
 
 ```html
-<input style="z-index: 40; padding: 10px;" type="text" placeholder="Search..." #search>
-<div id="googlemap" style="width: 100%; heigth: 400px;" #map></div>
+<input type="text" class="input" placeholder="Поиск..." #inputElement>
+<div class="map" #mapElement></div>
+```
+
+## Default styles
+
+```css
+body {
+    margin: 0;
+    padding: 0;
+}
+.map {
+    width: 100%;
+    height: 100vh;
+}
+.input {
+    position: absolute;
+        top: 30px;
+        left: 30px;
+
+    border: 1px solid silver;
+        border-radius: 15px;
+
+    font-family: Roboto;
+        font-size: 15px;
+        font-weight: lighter;
+        text-align: center;
+
+    padding: 10px;
+    z-index: 100;
+    width: 250px;
+}
 ```
 
 ## Component configuration
 
 ```typescript
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {GoogleMapsService} from 'google-maps-angular2';
-
-@Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
-})
 export class AppComponent implements AfterViewInit {
-    @ViewChild('map') map: ElementRef;
-    @ViewChild('search') search: ElementRef;
+    @ViewChild('mapElement') mapElement: ElementRef;
+    @ViewChild('inputElement') inputElement: ElementRef;
 
-    constructor(private api: GoogleMapsService) {}
+    private map: any;
+
+    constructor(private gapi: GoogleMapsService) {
+    }
 
     ngAfterViewInit(): void {
-        this.api.init.then(maps => {
+        /**
+         * Init map api [google.maps]
+         */
+        this.gapi.init.then((maps: any) => {
             const loc = new maps.LatLng(55.81800989, 49.09815408);
 
-            this.api.map = new maps.Map(this.map.nativeElement, {
+            this.map = new maps.Map(this.mapElement.nativeElement, {
                 zoom: 13,
                 center: loc,
                 scrollwheel: false,
@@ -73,7 +134,7 @@ export class AppComponent implements AfterViewInit {
                 }
             });
 
-            const input = this.search.nativeElement;
+            const input = this.inputElement.nativeElement;
             const options = {
                 componentRestrictions: {country: 'ru'}
             };
@@ -84,12 +145,10 @@ export class AppComponent implements AfterViewInit {
                 const place = autocomplete.getPlace();
                 const location = place.geometry.location;
 
-                this.api.map.filter(map => map).subscribe(m => {
-                    m.setZoom(13);
-                    m.setCenter({
-                        lat: location.lat(),
-                        lng: location.lng()
-                    });
+                this.map.setZoom(13);
+                this.map.setCenter({
+                    lat: location.lat(),
+                    lng: location.lng()
                 });
             });
         });

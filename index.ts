@@ -1,2 +1,2 @@
-export * from './src/google-maps.module';
-export * from './src/google-maps.service';
+export * from './src/app/google-maps.module';
+export * from './src/app/google-maps.service';

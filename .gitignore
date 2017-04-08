@@ -4,3 +4,6 @@
 .idea/modules.xml
 .idea/workspace.xml
 node_modules
+.idea/codeStyleSettings.xml
+.idea/inspectionProfiles/
+dist/

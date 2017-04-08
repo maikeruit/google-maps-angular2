@@ -1,42 +1,19 @@
 import {Injectable, ModuleWithProviders, Optional} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {UserServiceConfig} from "./google-maps.class";
+import {UserServiceConfig} from './google-maps.class';
+import {BehaviorSubject, Observable} from 'rxjs/Rx';
 
 @Injectable()
 export class GoogleMapsService {
 
     /**
-     * Google Maps Api key
+     * Google Maps Api link
      */
-    readonly API_KEY: string;
-
-    /**
-     * Google Maps Libraries
-     */
-    private libraries: Array<string>;
+    readonly url: string;
 
     /**
      * Promise to callback
      */
     private loadAPI: Promise<any>;
-
-    /**
-     * google.maps subject
-     */
-    private _map = new BehaviorSubject(null);
-
-    /**
-     * Constructor
-     * @param config
-     */
-    constructor(@Optional() config: UserServiceConfig) {
-        if (config) {
-            this.API_KEY = config.API_KEY;
-            this.libraries = config.libraries;
-        } else {
-            throw new Error('Module have been forRoot({API_KEY: your api key})');
-        }
-    }
 
     /**
      * Configure core method
@@ -53,14 +30,26 @@ export class GoogleMapsService {
     }
 
     /**
+     * Constructor
+     * @param config
+     */
+    constructor(@Optional() config: UserServiceConfig) {
+        if (config) {
+            this.url = config.url + '&callback=__onGoogleLoaded';
+        } else {
+            throw new Error('Module have been forRoot({API_KEY: your api key})');
+        }
+    }
+
+    /**
      * Load script
      */
     private loadScript(): void {
         if (!document.getElementById('google-maps-angular2')) {
-            let script = document.createElement('script');
+            const script = document.createElement('script');
 
             script.type = 'text/javascript';
-            script.src = `https://maps.googleapis.com/maps/api/js?libraries=${this.libraries.join('&')}&callback=__onGoogleLoaded&key=${this.API_KEY}`;
+            script.src = `${this.url}`;
             script.id = 'google-maps-angular2';
 
             document.head.appendChild(script);
@@ -83,22 +72,5 @@ export class GoogleMapsService {
         }
 
         return this.loadAPI;
-    }
-
-
-    /**
-     * Map setter
-     * @param map
-     */
-    set map(map) {
-        this._map.next(map);
-    }
-
-    /**
-     * Map getter
-     * @returns {BehaviorSubject}
-     */
-    get map(): BehaviorSubject<any> {
-        return this._map;
     }
 }

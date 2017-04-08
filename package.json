@@ -1,17 +1,21 @@
 {
   "name": "google-maps-angular2",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Google Maps Api for Angular 2",
   "main": "./dist/index.js",
   "typings": "./dist/index",
   "scripts": {
+    "serve": "lite-server -c=bs-config.json",
+    "prestart": "npm run build",
+    "start": "concurrently \"npm run build:watch\" \"npm run serve\"",
     "clean": "rimraf ./dist/*",
-    "build": "tsc",
+    "build:watch": "tsc -p src/ -w",
+    "build": "tsc -p src/",
     "prebuild": "npm run clean",
     "build-dist": "ngc -p tsconfig-dist.json",
     "prebuild-dist": "npm run clean",
     "prepublish": "npm run tslint && npm run build-dist",
-    "tslint": "tslint ./app/**/*.ts -t verbose"
+    "tslint": "tslint ./src/**/*.ts -t verbose"
   },
   "repository": {
     "type": "git",
@@ -33,7 +37,9 @@
   ],
   "author": "mac0eb",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "reflect-metadata": "^0.1.10"
+  },
   "devDependencies": {
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
@@ -42,26 +48,19 @@
     "@angular/http": "^4.0.0",
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
-    "@angular/router": "^4.0.0",
-    "core-js": "^2.4.1",
     "@angular/compiler-cli": "^4.0.0",
-    "@types/jasmine": "2.5.38",
-    "@types/node": "~6.0.60",
+    "@angular/router": "^4.0.1",
+    "angular-in-memory-web-api": "~0.3.0",
+    "systemjs": "^0.20.12",
+    "core-js": "^2.4.1n",
+    "concurrently": "^3.2.0",
+    "lite-server": "^2.2.2",
     "codelyzer": "~2.0.0",
-    "jasmine-core": "~2.5.2",
-    "jasmine-spec-reporter": "~3.2.0",
-    "karma": "~1.4.1",
-    "karma-chrome-launcher": "~2.0.0",
-    "karma-cli": "~1.0.1",
-    "karma-jasmine": "~1.1.0",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
-    "protractor": "~5.1.0",
-    "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0",
     "rxjs": "^5.3.0",
-    "zone.js": "^0.8.5"
+    "zone.js": "^0.8.5",
+    "rimraf": "^2.6.1"
   },
   "files": [
     "dist/"

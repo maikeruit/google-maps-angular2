@@ -1,7 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {GoogleMapsService} from './google-maps.service';
-import {UserServiceConfig} from "./google-maps.class";
+import {UserServiceConfig} from './google-maps.class';
 
 @NgModule({
     imports: [CommonModule],
