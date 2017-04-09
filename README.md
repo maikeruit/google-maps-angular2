@@ -7,7 +7,8 @@ Google Maps Api examples: <a href="https://developers.google.com/maps/documentat
 
 ## Demo
 
-<a href="https://youtu.be/fwcnSB6PF-A" target="_blank">Demo</a>
+<a href="https://youtu.be/fwcnSB6PF-A" target="_blank">Video demonstation</a><br>
+<a href="https://embed.plnkr.co/6Vn4p8c0W7SYiLZzQcoD/">Plunker Demo</a>
 
 ## Installation
 
@@ -49,6 +50,8 @@ System.config({
 First, import `GoogleMapsModule` into the angular module where you want to use it:
 
 ```typescript
+import {GoogleMapsModule} from 'google-maps-angular2';
+
 imports: [
   ...
     @NgModule({
@@ -104,6 +107,8 @@ body {
 ## Component configuration
 
 ```typescript
+import {GoogleMapsService} from 'google-maps-angular2';
+
 export class AppComponent implements AfterViewInit {
     @ViewChild('mapElement') mapElement: ElementRef;
     @ViewChild('inputElement') inputElement: ElementRef;
